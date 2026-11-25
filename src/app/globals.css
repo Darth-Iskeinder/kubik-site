@@ -1,26 +1,133 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Шрифты из layout.tsx */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* ДИЗАЙН-ТОКЕНЫ. Меняй здесь — поменяется на всём сайте.
+     Классы: bg-base, bg-panel, text-ink, text-brand, bg-brand-soft и т.д. */
+  --color-base: #f5f8fc; /* фон страницы: холодный off-white */
+  --color-panel: #ffffff; /* фон карточек */
+  --color-ink: #0b1b33; /* основной текст и заголовки */
+  --color-brand: #0a3d91; /* главный акцент: глубокий синий */
+  --color-brand-2: #1e88e5; /* второй синий для градиентов */
+  --color-sky: #8ad8f8; /* светлый голубой */
+  --color-brand-soft: #eef4ff; /* бледно-синий фон для плашек */
+  --color-line: #e2e8f0; /* тонкие рамки */
+
+  /* Свои анимации. После этого в коде можно писать классы animate-float, animate-gradient и т.д. */
+  --animate-float: float 16s ease-in-out infinite;
+  --animate-gradient: gradient 8s ease infinite;
+  --animate-glow: glow 8s ease-in-out infinite;
+  --animate-ticker: ticker 40s linear infinite;
+
+  --animate-rise: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-drift: drift 18s ease-in-out infinite;
+
+  /* Медленное «дыхание» шёлковых волн (карточка Cerera) */
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-14px, 8px);
+    }
+  }
+
+  /* Появление слов заголовка: снизу вверх с проявлением */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Плавное «парение» формул на фоне */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-40px) rotate(4deg);
+    }
+  }
+
+  /* Переливание градиента в тексте */
+  @keyframes gradient {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* «Дыхание» светящихся пятен */
+  @keyframes glow {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.75;
+      transform: scale(1.15);
+    }
+  }
+
+  /* Бегущая строка: сдвигаем на половину (контент продублирован) */
+  @keyframes ticker {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 }
 
+/* Свой класс для переливающегося фиолетового текста */
+@utility text-gradient {
+  background-image: linear-gradient(90deg, #0a3d91, #1e88e5, #38bdf8, #0a3d91);
+  background-size: 200% auto;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-gradient);
+}
+
+/* Многослойные мягкие тени: карточка и «парящий» элемент */
+@utility shadow-card {
+  box-shadow:
+    0 1px 2px rgba(10, 25, 60, 0.05),
+    0 8px 24px -12px rgba(10, 40, 100, 0.15);
+}
+@utility shadow-float {
+  box-shadow:
+    0 1px 2px rgba(10, 25, 60, 0.06),
+    0 12px 32px -8px rgba(10, 40, 100, 0.22),
+    0 40px 80px -24px rgba(10, 40, 100, 0.3);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-base text-slate-600 font-sans;
+}
+
+/* Если человек отключил анимации в системе, уважаем это */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

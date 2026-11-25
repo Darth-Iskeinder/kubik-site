@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Скрыть служебный значок «N» в углу при разработке (ошибки Next.js всё равно покажет)
+  devIndicators: false,
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
