@@ -8,8 +8,9 @@
 
 @theme {
   /* ДИЗАЙН-ТОКЕНЫ. Меняй здесь — поменяется на всём сайте.
-     Классы: bg-base, bg-panel, text-ink, text-brand, bg-brand-soft и т.д. */
-  --color-base: #f5f8fc; /* фон страницы: холодный off-white */
+     Классы: bg-page, bg-panel, text-ink, text-brand, bg-brand-soft и т.д.
+     Не называть цвет base, sm, lg, xl: text-base станет цветом, а не размером шрифта. */
+  --color-page: #f5f8fc; /* фон страницы: холодный off-white */
   --color-panel: #ffffff; /* фон карточек */
   --color-ink: #0b1b33; /* основной текст и заголовки */
   --color-brand: #0a3d91; /* главный акцент: глубокий синий */
@@ -119,7 +120,7 @@
 }
 
 body {
-  @apply bg-base text-slate-600 font-sans;
+  @apply bg-page text-slate-600 font-sans;
 }
 
 /* Если человек отключил анимации в системе, уважаем это */
